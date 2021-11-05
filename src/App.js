@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 
 import Footer from './components/Footer/Footer';
 import AlertComponent from './components/AlertComponent/AlertComponent';
-import Welcome from './components/Welcome/Welcome';
 
 import {
   BrowserRouter as Router,
@@ -17,23 +16,40 @@ import { colorData } from './data';
 
 function App() {
   const [colors, setColor] = useState(colorData);
-  const [title, updateTitle] = useState(null);
   const [errorMessage, updateErrorMessage] = useState(null);
+  const [colorExist, setColorExist] = useState(false);
 
-  const addColor = (color) => {
+  const addColor = (colorAdd) => {
     setColor((prevColors) => {
-      return [...prevColors, color];
+      console.log(colorAdd)
+      const newArray = prevColors.forEach(color => {
+        if(color.colorName === colorAdd.colorName){
+          color.counter++
+          setColorExist(true)
+          if(color.counter > 5 && color.counter < 11){
+            color.type = "popular"
+          } else if (color.counter >= 11){
+            color.type = "trending"
+          }
+        }
+      })
+      if(colorExist){
+        return [newArray];
+      }
+      else{
+          return [...prevColors, colorAdd];
+      }
     });
   };
+
 
   return (
     <Router>
       <div className="App container">
-      
         <Switch>
           <Route path="/" exact={true}>
-            <Header title={title}/>
-            <UserScreen colors={colors} showError={updateErrorMessage} updateTitle={updateTitle}/>
+            <Header />
+            <UserScreen addColor={addColor} colors={colors} showError={updateErrorMessage}/>
           </Route>
         </Switch>
         <AlertComponent errorMessage={errorMessage} hideError={updateErrorMessage}/>

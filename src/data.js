@@ -2,17 +2,17 @@ export const colorData = [
     {
       id: 1,
       colorName: "Red",
-      counter: 0,
+      counter: 11,
       type: "trending"
     }, {
         id: 2,
         colorName: "Green",
-        counter: 0,
+        counter: 6,
         type: "popular"
       }, {
-        id: 2,
-        colorName: "Purple",
-        counter: 0,
+        id: 3,
+        colorName: "Orange",
+        counter: 1,
         type: "upAndComing"
-      },
+      }
   ];
