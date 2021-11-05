@@ -6,8 +6,8 @@ function TableSections(props){
     
     function SortAndGroup(type) {
         const colorRows = [];
-        for (let color of colors) {
-            if(color.type === type){
+        colors.map(color => {
+            if(type === color.type){
                 const row = (
                     <tr key={color.id}>
                         <th scope="row">{color.colorName}</th>
@@ -16,12 +16,12 @@ function TableSections(props){
                 );
                 colorRows.push(row);
             }
-        }
+        })
         return colorRows
     }
 
     return(
-        <table>
+        <table >
             <thead>
             <tr>
                 <th scope="col">Trending</th>

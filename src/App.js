@@ -22,23 +22,19 @@ function App() {
   const addColor = (colorAdd) => {
     setColor((prevColors) => {
       console.log(colorAdd)
-      const newArray = prevColors.forEach(color => {
-        if(color.colorName === colorAdd.colorName){
-          color.counter++
-          setColorExist(true)
-          if(color.counter > 5 && color.counter < 11){
-            color.type = "popular"
-          } else if (color.counter >= 11){
-            color.type = "trending"
-          }
+      const currentColor = prevColors.find(color => color.colorName == colorAdd.colorName)
+      if(currentColor){
+        currentColor.counter++
+        if(currentColor.counter > 5 && currentColor.counter < 11){
+          currentColor.type = "popular"
+        } else if (currentColor.counter >= 11){
+          currentColor.type = "trending"
         }
-      })
-      if(colorExist){
-        return [newArray];
+        return [...prevColors];
+      } else {
+        return [...prevColors, colorAdd];
       }
-      else{
-          return [...prevColors, colorAdd];
-      }
+      
     });
   };
 

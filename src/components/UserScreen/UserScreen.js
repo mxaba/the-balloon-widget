@@ -14,9 +14,10 @@ function UserScreen(props){
         } else {
             addColor({
                 id: uid(),
-                colorName: stateColorValue,
+                colorName: stateColorValue.charAt(0).toUpperCase() + stateColorValue.slice(1).toLowerCase(),
                 counter: 1,
-                type: "upAndComing"
+                type: "upAndComing",
+                timestamp: new Date().getTime()
             })
         }
         setStateColorInput("")
