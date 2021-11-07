@@ -4,20 +4,19 @@ import TrendingColorsTable from "../Tables/TrendingColorsTable";
 import { uid } from 'uid';
 
 function UserScreen(props){
-    const {colors, addColor} = props;
+    const {colors, addColor, removeTrendingColor} = props;
     const [stateColorValue , setStateColorInput] = useState("")
     // setFilteredColor(colors)
 
     const handleSubmitClick = () => {
-        if(stateColorValue == ""){
+        if(stateColorValue === ""){
             props.showError('Please enter a color');
         } else {
             addColor({
                 id: uid(),
                 colorName: stateColorValue.charAt(0).toUpperCase() + stateColorValue.slice(1).toLowerCase(),
                 counter: 1,
-                type: "upAndComing",
-                timestamp: new Date().getTime()
+                type: "upAndComing"
             })
         }
         setStateColorInput("")
@@ -43,11 +42,12 @@ function UserScreen(props){
                         className="btn"
                         onClick={handleSubmitClick}
                     />
-                    <TrendingColorsTable colors={colors}/>
+                    {console.log(colors)}
+                    <TrendingColorsTable removeTrendingColor={removeTrendingColor} colors={colors}/>
                 </div>
 
                 <div className="col-8" style={{float: "right"}}>
-                    <TableSections colors={colors}/>
+                    <TableSections removeTrendingColor={removeTrendingColor} colors={colors}/>
                 </div>
             </div>
     	</div>

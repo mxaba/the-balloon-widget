@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from 'react'
 import "./Table.css"
 
 function TableSections(props){
-    const colors  = props.colors;
+    const { colors, removeTrendingColor}  = props;
+    const [fiveMinutesLeft, setFiveMinutesLeft] = useState(10);
+
+	useEffect(() => {
+        if (fiveMinutesLeft > 0) {
+        const timerId = setTimeout(() => {
+            setFiveMinutesLeft(fiveMinutesLeft - 1);
+        }, 1000);
+            return () => clearTimeout(timerId);
+        } else {
+            removeTrendingColor()
+            setFiveMinutesLeft(10)
+        }
+    });
     
-    function SortAndGroup(type) {
+    const SortAndGroup = (type) => {
         const colorRows = [];
         colors.map(color => {
             if(type === color.type){
@@ -21,6 +34,7 @@ function TableSections(props){
     }
 
     return(
+        
         <table >
             <thead>
             <tr>
@@ -29,7 +43,9 @@ function TableSections(props){
                 <th scope="col">Up and Coming</th>
             </tr>
             </thead>
+            {fiveMinutesLeft}
             <tbody>
+                {console.log(fiveMinutesLeft)}
             <tr>
                 <td>{SortAndGroup("trending")}</td>
                 <td>{SortAndGroup("popular")}</td>
