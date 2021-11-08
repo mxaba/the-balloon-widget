@@ -1,7 +1,11 @@
 
   table {
-    margin: 10px auto;
+    margin: 16px auto;
     border-collapse: collapse;
+    display: block;
+    height: 400px;
+    overflow-y: scroll;
+    float: right;
   }
   
   thead th {

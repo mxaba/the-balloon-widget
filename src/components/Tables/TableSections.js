@@ -3,7 +3,7 @@ import "./Table.css"
 
 function TableSections(props){
     const { colors, removeTrendingColor}  = props;
-    const [fiveMinutesLeft, setFiveMinutesLeft] = useState(10);
+    const [fiveMinutesLeft, setFiveMinutesLeft] = useState(30);
 
 	useEffect(() => {
         if (fiveMinutesLeft > 0) {
@@ -33,6 +33,14 @@ function TableSections(props){
         return colorRows
     }
 
+    const displayTime = (seconds) => {
+        const format = val => `0${Math.floor(val)}`.slice(-2)
+        const hours = seconds / 3600
+        const minutes = (seconds % 3600) / 60
+      
+        return [hours, minutes, seconds % 60].map(format).join(':')
+    }
+
     return(
         
         <table >
@@ -43,9 +51,13 @@ function TableSections(props){
                 <th scope="col">Up and Coming</th>
             </tr>
             </thead>
-            {fiveMinutesLeft}
+            
+            <tfoot>
+            <tr>
+                <td colSpan="3">Data will refresh in {displayTime(fiveMinutesLeft)}</td>
+            </tr>
+            </tfoot>
             <tbody>
-                {console.log(fiveMinutesLeft)}
             <tr>
                 <td>{SortAndGroup("trending")}</td>
                 <td>{SortAndGroup("popular")}</td>

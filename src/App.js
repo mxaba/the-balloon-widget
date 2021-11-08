@@ -16,14 +16,14 @@ import { colorData } from './data';
 function App() {
   const [colors, setColor] = useState(colorData);
   const [errorMessage, updateErrorMessage] = useState(null);
-
+  
   const addColor = (colorAdd) => {
     setColor((prevColors) => {
-      console.log(colorAdd)
-      const currentColor = prevColors.find(color => color.colorName == colorAdd.colorName)
+      const trendingColors = prevColors.map(color => color.type === "trending")
+      const currentColor = prevColors.find(color => color.colorName === colorAdd.colorName)
       if(currentColor){
         currentColor.counter++
-        if(currentColor.counter > 5 && currentColor.counter < 11){
+        if(currentColor.counter >= 5 && currentColor.counter < 11){
           currentColor.type = "popular"
         } else if (currentColor.counter >= 11){
           currentColor.type = "trending"
@@ -40,7 +40,6 @@ function App() {
   const removeTrendingColor = () => {
     setColor((prevColors) => {
       prevColors.map(color => {
-        console.log(color)
         if(color.type === "trending"){
           if ((((new Date().getTime()) / 1000) - color.timestamp) > 300){
             color.type = "popular"

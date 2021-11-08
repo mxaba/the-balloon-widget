@@ -7,9 +7,9 @@ function Header(props) {
         <header>
         <img className="logo" src={logo} alt="Site Logo" />
         <nav>
-            <ul class="nav__links">
+            <ul className="nav__links">
             <li>
-            <span className="h3">Hey, Welcome to the Balloon-Shop</span> <br/>
+            <span className="h3">Hey, Welcome to the 🎈Balloon-Shop</span> <br/>
             {/* {renderLogout()} */}
                 
             </li>
