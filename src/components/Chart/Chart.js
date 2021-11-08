@@ -31,7 +31,7 @@ function Chart(props) {
   }
 
   return (
-    <div>
+    <div className="chart">
       <Doughnut
         data={state}
             options={{

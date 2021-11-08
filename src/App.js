@@ -12,6 +12,7 @@ import {
 import UserScreen from './components/UserScreen/UserScreen';
 import Header from './components/Header/Header';
 import { colorData } from './data';
+import Color from 'color';
 
 function App() {
   const [colors, setColor] = useState(colorData);
@@ -51,6 +52,29 @@ function App() {
     })
   }
 
+  const deleteColor = (id) => {
+    setColor((prevColors) => {
+      return prevColors.filter((color) => color.id !== id);
+    });
+  };
+
+  const editColorCount = (name, counter) => {
+    setColor((prevColors) => {
+      const currentColor = prevColors.find(color => color.colorName === name)
+      if (currentColor){
+        currentColor.counter = counter
+        if(currentColor.counter < 5){
+          currentColor.type = "upAndComing"
+        } else if(currentColor.counter >= 5 && currentColor.counter < 11){
+          currentColor.type = "popular"
+        } else if (currentColor.counter >= 11){
+          currentColor.type = "trending"
+          currentColor.timestamp =  (new Date().getTime()) / 1000;
+        }
+      }
+      return [...prevColors];
+    });
+  };
 
   return (
     <Router>
@@ -58,7 +82,7 @@ function App() {
         <Switch>
           <Route path="/" exact={true}>
             <Header />
-            <UserScreen removeTrendingColor={removeTrendingColor} addColor={addColor} colors={colors} showError={updateErrorMessage}/>
+            <UserScreen editColorCount={editColorCount} deleteColor={deleteColor} removeTrendingColor={removeTrendingColor} addColor={addColor} colors={colors} showError={updateErrorMessage}/>
           </Route>
         </Switch>
         <AlertComponent errorMessage={errorMessage} hideError={updateErrorMessage}/>
