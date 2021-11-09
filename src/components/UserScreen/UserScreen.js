@@ -5,7 +5,7 @@ import { allowedColors } from "../../allowedColors";
 import Chart from "../Chart/Chart";
 
 function UserScreen(props){
-    const {colors, editColorCount, deleteColor, addColor, removeTrendingColor} = props;
+    const {colors, editColorCount, threeTrending, deleteColor, addColor, removeTrendingColor} = props;
     const [stateColorValue , setStateColorInput] = useState("")
 
     const CanColorBeBlocked = (colorName) => {
@@ -59,20 +59,18 @@ function UserScreen(props){
                 props.showError(`What you entered should be seperated by a space eg: ${splittedSring[0].trim()} 2`);
             }
         }
-        setStateColorInput("")
+        // setStateColorInput("")
     }
 
     const handleRequestClick = () => {
         if(stateColorValue === ""){
             props.showError('Please enter a color');
         } else {
-            console.log("")
-            console.log(CanColorBeBlocked(stateColorValue))
             const name = stateColorValue.charAt(0).toUpperCase() + stateColorValue.slice(1).toLowerCase();
             if (allowedColors.includes(name)){
-                if (CanColorBeBlocked(name)){
-                    props.showError("Only three allowed to trend")
-                } else {
+                // if (CanColorBeBlocked(name)){
+                //     props.showError("Only three allowed to trend")
+                // } else {
                     addColor({
                         id: uid(),
                         colorName: name,
@@ -80,13 +78,13 @@ function UserScreen(props){
                         type: "upAndComing"
                     })
                     props.showError(null)
-                }
+                // }
             } else {
                 props.showError(`${name} is not supported`);
             }
             
         }
-        setStateColorInput("")
+        // setStateColorInput("")
     }
 
 
