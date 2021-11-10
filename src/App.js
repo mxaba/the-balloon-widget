@@ -32,20 +32,24 @@ function App() {
     }
   }
 
+  function addCurrentColor(currentColor) {
+    if (currentColor.counter < 5) {
+      currentColor.type = "upAndComing";
+    } else if (currentColor.counter >= 5 && currentColor.counter < 11) {
+      currentColor.type = "popular";
+    } else if (currentColor.counter >= 11) {
+      currentColor.type = "trending";
+      currentColor.timestamp = (new Date().getTime()) / 1000;
+    }
+  }
+
   const addColor = (colorAdded) => {
     setColor((prevColors) => {
       CanColorBeBlocked(colorAdded)
       const currentColor = prevColors.find(color => color.colorName === colorAdded.colorName)
       if(currentColor){
-        currentColor.counter++
-        if(currentColor.counter < 5){
-          currentColor.type = "upAndComing"
-        } else if(currentColor.counter >= 5 && currentColor.counter < 11){
-          currentColor.type = "popular"
-        } else if (currentColor.counter >= 11){
-          currentColor.type = "trending"
-          currentColor.timestamp =  (new Date().getTime()) / 1000;
-        }
+        currentColor.counter++;
+        addCurrentColor(currentColor);
         return [...prevColors];
       } else {
         return [...prevColors, colorAdded];
@@ -57,7 +61,6 @@ function App() {
   const threeTrending = () => {
     setColor((prevColors) => {
       const arrayTimestamp = []
-      var tobe = 0;
       prevColors.map(color => {
         if(color.type === "trending"){
           arrayTimestamp.push(color.timestamp)
@@ -91,19 +94,12 @@ function App() {
     });
   };
 
-  const editColorCount = (name, counter) => {
+  const subractColor = (name) => {
     setColor((prevColors) => {
       const currentColor = prevColors.find(color => color.colorName === name)
       if (currentColor){
-        currentColor.counter = counter
-        if(currentColor.counter < 5){
-          currentColor.type = "upAndComing"
-        } else if(currentColor.counter >= 5 && currentColor.counter < 11){
-          currentColor.type = "popular"
-        } else if (currentColor.counter >= 11){
-          currentColor.type = "trending"
-          currentColor.timestamp =  (new Date().getTime()) / 1000;
-        }
+        currentColor.counter--
+        addCurrentColor(currentColor);
       }
       return [...prevColors];
     });
@@ -115,7 +111,7 @@ function App() {
         <Switch>
           <Route path="/" exact={true}>
             <Header />
-            <UserScreen threeTrending={threeTrending} editColorCount={editColorCount} deleteColor={deleteColor} removeTrendingColor={removeTrendingColor} addColor={addColor} colors={colors} showError={updateErrorMessage}/>
+            <UserScreen threeTrending={threeTrending} editColorCount={subractColor} deleteColor={deleteColor} removeTrendingColor={removeTrendingColor} addColor={addColor} colors={colors} showError={updateErrorMessage}/>
           </Route>
         </Switch>
         <AlertComponent errorMessage={errorMessage} hideError={updateErrorMessage}/>
@@ -126,3 +122,5 @@ function App() {
 }
 
 export default App;
+
+

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import "./Table.css"
 
 function TableSections(props){
-    const { colors, removeTrendingColor}  = props;
+    const { colors, deleteColor, editColorCount, removeTrendingColor, addColor}  = props;
     const [fiveMinutesLeft, setFiveMinutesLeft] = useState(30);
 
 	useEffect(() => {
@@ -16,6 +16,18 @@ function TableSections(props){
             setFiveMinutesLeft(10)
         }
     });
+
+    const addCurrentColorTable = (color) => {
+        addColor(color)
+    }
+
+    const subCurrentColorTable = (color) => {
+        if(color.counter === 1){
+            deleteColor(color.id)
+        } else {
+            editColorCount(color.colorName)
+        }
+    }
     
     const SortAndGroup = (type) => {
         const colorRows = [];
@@ -23,8 +35,12 @@ function TableSections(props){
             if(type === color.type){
                 const row = (
                     <tr key={color.id}>
-                        <th scope="row">{color.colorName}</th>
-                        <td>{color.counter}</td>
+                        <th scope="row" style={{ color: color.colorName }}>{color.colorName}</th>
+                        <td style={{ color: color.colorName }}> 
+                            <i class="fa fa-plus" aria-hidden="true" onClick={() => addCurrentColorTable(color)}></i> 
+                             {color.counter}
+                            <i class="fa fa-minus" aria-hidden="true" onClick={() => subCurrentColorTable(color)}></i> 
+                        </td>
                     </tr>
                 );
                 colorRows.push(row);

@@ -5,21 +5,10 @@ import { allowedColors } from "../../allowedColors";
 import Chart from "../Chart/Chart";
 
 function UserScreen(props){
-    const {colors, editColorCount, threeTrending, deleteColor, addColor, removeTrendingColor} = props;
+    const {colors, editColorCount, deleteColor, addColor, removeTrendingColor} = props;
     const [stateColorValue , setStateColorInput] = useState("")
-
-    const CanColorBeBlocked = (colorName) => {
-        const trendingColors = colors.filter(color => color.type === "trending")
-        const currentColor = colors.find(color => color.colorName === colorName && color.counter === 10)
-        if (trendingColors.length >=3 && currentColor){
-          return true
-        } else {
-          return false
-        }
-    }
     
     const colorChangeHandler = (event) => setStateColorInput(event.target.value);
-
 
     const handleDeleteClick = () => {
         if(stateColorValue === ""){
@@ -36,41 +25,12 @@ function UserScreen(props){
         setStateColorInput("")
     }
 
-    const handleEditClick = () => {
-        if(stateColorValue === ""){
-            props.showError('Please enter a color and count');
-        } else {
-            const name = stateColorValue.charAt(0).toUpperCase() + stateColorValue.slice(1).toLowerCase();
-            var splittedSring = name.split(" ")
-            console.log(splittedSring)
-            if(splittedSring.length > 1){
-                const colorToBeDeleted = colors.find(color => color.colorName === splittedSring[0].trim())
-                if (colorToBeDeleted){
-                    if(colorToBeDeleted.counter > parseInt(splittedSring[1].trim(), 10)){
-                        editColorCount(colorToBeDeleted.colorName, parseInt(splittedSring[1].trim(), 10))
-                        props.showError(null);
-                    } else {
-                        props.showError(`👮🏾‍♂️That's illegal👮🏾‍♂️`);
-                    }
-                } else {
-                    props.showError(`This ${splittedSring[0].trim()} is not on our requested colors😤`);
-                }
-            } else {
-                props.showError(`What you entered should be seperated by a space eg: ${splittedSring[0].trim()} 2`);
-            }
-        }
-        // setStateColorInput("")
-    }
-
     const handleRequestClick = () => {
         if(stateColorValue === ""){
             props.showError('Please enter a color');
         } else {
             const name = stateColorValue.charAt(0).toUpperCase() + stateColorValue.slice(1).toLowerCase();
             if (allowedColors.includes(name)){
-                // if (CanColorBeBlocked(name)){
-                //     props.showError("Only three allowed to trend")
-                // } else {
                     addColor({
                         id: uid(),
                         colorName: name,
@@ -78,13 +38,11 @@ function UserScreen(props){
                         type: "upAndComing"
                     })
                     props.showError(null)
-                // }
             } else {
                 props.showError(`${name} is not supported`);
             }
             
         }
-        // setStateColorInput("")
     }
 
 
@@ -109,17 +67,13 @@ function UserScreen(props){
                         <i class="fa fa-trash-o" aria-hidden="true"></i>
                     </button>
 
-                    <button className="btn btn-outline-warning" onClick={handleEditClick}>
-                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                    </button>
-
                     <br />
                     <Chart colors={colors}/>
                 </div>
                 <div class="w-20"></div>
 
                 <div className="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8" style={{float: "right"}}>
-                    <TableSections removeTrendingColor={removeTrendingColor} colors={colors}/>
+                    <TableSections deleteColor={deleteColor} editColorCount={editColorCount} addColor={addColor} removeTrendingColor={removeTrendingColor} colors={colors}/>
                 </div>
             </div>
     	</div>
