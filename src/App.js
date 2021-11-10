@@ -108,12 +108,12 @@ function App() {
   return (
     <Router>
       <div className="App container">
-        <Switch>
-          <Route path="/" exact={true}>
+        {/* <Switch>
+          <Route path="/" exact={true}> */}
             <Header />
             <UserScreen threeTrending={threeTrending} editColorCount={subractColor} deleteColor={deleteColor} removeTrendingColor={removeTrendingColor} addColor={addColor} colors={colors} showError={updateErrorMessage}/>
-          </Route>
-        </Switch>
+          {/* </Route>
+        </Switch> */}
         <AlertComponent errorMessage={errorMessage} hideError={updateErrorMessage}/>
         <Footer />
       </div>
