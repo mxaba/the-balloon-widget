@@ -5,9 +5,7 @@ import Footer from './components/Footer/Footer';
 import AlertComponent from './components/AlertComponent/AlertComponent';
 
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route
+  BrowserRouter as Router
 } from "react-router-dom";
 import UserScreen from './components/UserScreen/UserScreen';
 import Header from './components/Header/Header';
@@ -66,10 +64,6 @@ function App() {
           arrayTimestamp.push(color.timestamp)
         }
       })
-      for (var i in arrayTimestamp) {
-        console.log(i)
-      }
-      // const currentColor = prevColors.find(color => color.timestamp === name)
       return [...prevColors];
     });
   };
@@ -108,12 +102,8 @@ function App() {
   return (
     <Router>
       <div className="App container">
-        {/* <Switch>
-          <Route path="/" exact={true}> */}
-            <Header />
-            <UserScreen threeTrending={threeTrending} editColorCount={subractColor} deleteColor={deleteColor} removeTrendingColor={removeTrendingColor} addColor={addColor} colors={colors} showError={updateErrorMessage}/>
-          {/* </Route>
-        </Switch> */}
+        <Header />
+        <UserScreen threeTrending={threeTrending} editColorCount={subractColor} deleteColor={deleteColor} removeTrendingColor={removeTrendingColor} addColor={addColor} colors={colors} showError={updateErrorMessage}/>
         <AlertComponent errorMessage={errorMessage} hideError={updateErrorMessage}/>
         <Footer />
       </div>

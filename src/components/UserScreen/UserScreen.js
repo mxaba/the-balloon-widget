@@ -3,6 +3,7 @@ import TableSections from "../Tables/TableSections";
 import { uid } from 'uid';
 import { allowedColors } from "../../allowedColors";
 import Chart from "../Chart/Chart";
+import { Hint } from 'react-autocomplete-hint';
 
 function UserScreen(props){
     const {colors, editColorCount, deleteColor, addColor, removeTrendingColor} = props;
@@ -29,7 +30,7 @@ function UserScreen(props){
         if(stateColorValue === ""){
             props.showError('Please enter a color');
         } else {
-            const name = stateColorValue.charAt(0).toUpperCase() + stateColorValue.slice(1).toLowerCase();
+            const name = stateColorValue.charAt(0).toUpperCase() + stateColorValue.slice(1);
             if (allowedColors.includes(name)){
                     addColor({
                         id: uid(),
@@ -51,14 +52,20 @@ function UserScreen(props){
         <div className="container">
             <div className="row">
                 <div className="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 threeButton">
+                <Hint options={allowedColors}>
                     <input type="text" 
                         name="color" 
-                        id="color" 
+                        id="color"
+                        style={{
+                            width: '100%',
+                            margin: 0,
+                        }}
                         className="form__input"
                         value={stateColorValue} 
                         placeholder="Request/Delete/Edit color"
                         onChange={colorChangeHandler}
-                    /> <br /><br />
+                    />
+                </Hint> <br /><br />
                     <button className="btn btn-outline-success" onClick={handleRequestClick}>
                         <i class="fa fa-paper-plane" aria-hidden="true"></i>
                     </button>
@@ -72,7 +79,7 @@ function UserScreen(props){
                 </div>
                 <div class="w-20"></div>
 
-                <div className="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8" style={{float: "right"}}>
+                <div className="col-8 col-md" style={{float: "right"}}>
                     <TableSections deleteColor={deleteColor} editColorCount={editColorCount} addColor={addColor} removeTrendingColor={removeTrendingColor} colors={colors}/>
                 </div>
             </div>

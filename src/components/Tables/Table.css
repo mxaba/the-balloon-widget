@@ -6,6 +6,7 @@
     height: 400px;
     overflow-y: scroll;
     float: right;
+    width: auto;
   }
   
   thead th {
