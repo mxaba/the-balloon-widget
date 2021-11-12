@@ -51,7 +51,7 @@ function UserScreen(props){
         
         <div className="container">
             <div className="row">
-                <div className="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 threeButton">
+                <div className="col-4 threeButton">
                 <Hint options={allowedColors}>
                     <input type="text" 
                         name="color" 
@@ -79,7 +79,7 @@ function UserScreen(props){
                 </div>
                 <div class="w-20"></div>
 
-                <div className="col-8 col-md" style={{float: "right"}}>
+                <div className="col-8" style={{float: "right"}}>
                     <TableSections deleteColor={deleteColor} editColorCount={editColorCount} addColor={addColor} removeTrendingColor={removeTrendingColor} colors={colors}/>
                 </div>
             </div>
