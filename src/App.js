@@ -13,6 +13,7 @@ import { colorData } from './data';
 
 function App() {
   const [colors, setColor] = useState(colorData);
+  const [colorsDatabase, setColorDatabase] = useState([]);
   const [errorMessage, updateErrorMessage] = useState(null);
   
   const CanColorBeBlocked = (colorAdded) => {
@@ -29,6 +30,16 @@ function App() {
       currentColor.counter = 9
     }
   }
+
+  // const fetchColorDataBase = async () => {
+  //   let { data: colors, error } = await supabase
+  //           .from("colors")
+  //           .select("*")
+  //           .order("id", { ascending: false });
+    
+  // }
+
+  
 
   function addCurrentColor(currentColor) {
     if (currentColor.counter < 5) {
@@ -55,6 +66,10 @@ function App() {
       
     });
   };
+
+  const addColorDatabase = async (colorAdded) => {
+    
+  }
 
   const threeTrending = () => {
     setColor((prevColors) => {

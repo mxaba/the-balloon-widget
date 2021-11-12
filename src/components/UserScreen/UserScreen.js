@@ -15,7 +15,7 @@ function UserScreen(props){
         if(stateColorValue === ""){
             props.showError('Please enter a color you want to deleted');
         } else {
-            const name = stateColorValue.charAt(0).toUpperCase() + stateColorValue.slice(1).toLowerCase();
+            const name = stateColorValue.charAt(0).toUpperCase() + stateColorValue.slice(1);
             const colorToBeDeleted = colors.find(color => color.colorName === name)
             if (colorToBeDeleted){
                 deleteColor(colorToBeDeleted.id)
@@ -51,7 +51,7 @@ function UserScreen(props){
         
         <div className="container">
             <div className="row">
-                <div className="col-4 threeButton">
+                <div className="col col-4 threeButton">
                 <Hint options={allowedColors}>
                     <input type="text" 
                         name="color" 
@@ -79,7 +79,7 @@ function UserScreen(props){
                 </div>
                 <div class="w-20"></div>
 
-                <div className="col-8" style={{float: "right"}}>
+                <div className="col" style={{float: "right"}}>
                     <TableSections deleteColor={deleteColor} editColorCount={editColorCount} addColor={addColor} removeTrendingColor={removeTrendingColor} colors={colors}/>
                 </div>
             </div>
